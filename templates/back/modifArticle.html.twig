@@ -1,0 +1,59 @@
+{% extends 'baseBack.html.twig' %}
+{% block title %}
+    {{ parent() }} Modification Article
+{% endblock %}
+
+{% block TitrePage%}
+    Modification de l'article
+{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="row justify-content-center mt-4">
+            <div class="alert alert-success col-md-6 text-center">{{ message }}</div>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="row justify-content-center mt-4">
+            <div class="alert alert-danger col-md-6 text-center">{{ message }}</div>
+        </div>
+    {% endfor %}
+    {#{{ form(form) }}#}{##}
+
+    {{ form_start(form) }}
+    <label for="">Nom de l'article</label>
+    {{ form_row(form.nom) }}
+    <label for="">Prix de l'article</label>
+    {{ form_row(form.prix) }}
+    <label for="">Catégorie de l'article</label>
+    {{ form_row(form.categorie) }}
+    <label for="">Photo de l'article</label>
+    {{ form_row(form.photoModif, { 'attr':{"onChange":"loadFile(event)"} }) }}
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+
+            <img id="image" style='width:300px'>
+
+        </div>
+        <div class="col-md-5 text-center">
+
+            <img src="{{ asset('upload/') }}{{ article.photo }}" style='width:300px'>
+
+        </div>
+    </div>
+    {{ form_row(form.Valider) }}
+
+
+
+    {{ form_end(form) }}
+    <script>
+
+        var loadFile = function (event) {
+            var image = document.getElementById('image');
+
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+
+    </script>
+{% endblock %}

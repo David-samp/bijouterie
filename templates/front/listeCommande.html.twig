@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} Liste des commandes
+{% endblock %}
+
+{% block TitrePage%}
+    Liste des commandes
+{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="row justify-content-center mt-4">
+            <div class="alert alert-success col-md-6 text-center">{{ message }}</div>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="row justify-content-center mt-4">
+            <div class="alert alert-danger col-md-6 text-center">{{ message }}</div>
+        </div>
+    {% endfor %}
+
+    {% for commande in commandes %}
+
+    <div class="container-fluid">
+        <table class="table">
+            <thead class="thead-dark text-center">
+            <tr>
+                <th >Nom</th>
+                <th >Photo</th>
+                <th >Prix unitaire</th>
+                <th >Quantité</th>
+                <th >Prix Total</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for item in commande.achats %}
+            <tr>
+                <td>{{  item.article.nom }}</td>
+                <td><img height="40" width="40" src="{{ asset('upload/') }}{{ item.article.photo }}" alt="{{ item.article.nom }}"></td>
+
+                <td>{{ item.article.prix  }} €</td>
+                <td>x {{ item.quantite }}</td>
+                <td>{{ item.article.prix * item.quantite }} €</td>
+
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        <div class="col-md-8  mb-5"><h4>Total de la commande : {{ commande.montantTotal }} €</h4></div>
+    </div>
+    {% endfor %}
+
+
+{% endblock %}
+
+
+
+

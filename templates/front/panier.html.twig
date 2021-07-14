@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} Panier
+{% endblock %}
+
+{% block TitrePage%}
+    Panier
+{% endblock %}
+
+{% block body %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nom de l'article</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix total</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for item in panier %}
+            <tr class="table-active">
+                <th scope="row">{{ item.article.nom }}</th>
+                <td>{{ item.article.prix }} €</td>
+                <td class="d-flex align-items-center">
+                    <a class="btn btn-primary"" href="{{ path('remove', {id:item.article.id}) }}">-</a>
+                    <p class="mx-3">{{ item.quantite }} </p>
+                    <a class="btn btn-primary" href="{{ path('add', {id:item.article.id}) }}">+</a>
+                </td>
+                <td>{{ item.article.prix * item.quantite}} €</td>
+                <td><a class="btn btn-primary" href="{{ path('delete', {id:item.article.id}) }}">Supprimer l'article</a></td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Total = {{ total }} €</p>
+    <a class="btn btn-danger" href="{{ path('deletePanier')}}">Supprimer le panier</a>
+    <a class="btn btn-success" href="{{ path('commande')}}">Commander</a>
+{% endblock %}
+
+
+
